@@ -77,3 +77,51 @@ WHERE
 | 14                 | Vintage wooden chair     | 2024-09-17 18:02:31    | $150.00   | Alice Johnson (Seller)      | David Brown (Buyer)       |
 
 --------------------
+
+
+SELECT 
+    SUM(t.amount_paid) AS 'Total Sales'
+FROM 
+    Transaction t
+WHERE 
+    t.transaction_date BETWEEN '2024-08-01' AND '2024-09-21'; 
+
+
+
+
+## Total Sales
+
+| **Total Sales** |
+|-----------------|
+| $2,580.00       |
+
+----------------------
+
+
+SELECT 
+    u.user_id AS 'Customer ID',
+    u.name AS 'Customer Name',
+    COUNT(t.transaction_id) AS 'Number of Purchases'
+FROM 
+    Transaction t
+JOIN 
+    User u ON t.buyer_id = u.user_id
+GROUP BY 
+    u.user_id, u.name
+ORDER BY 
+    COUNT(t.transaction_id) DESC;
+
+
+## Most Active Customers
+
+| **Customer ID** | **Customer Name** | **Number of Purchases** |
+|-----------------|--------------------|--------------------------|
+| 2               | Alice Johnson      | 1                        |
+| 3               | Eve Davis          | 1                        |
+| 4               | Bob Smith          | 1                        |
+| 5               | Carol Williams     | 1                        |
+| 6               | David Brown        | 1                        |
+
+
+
+---------------------
