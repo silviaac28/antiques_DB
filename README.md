@@ -125,3 +125,63 @@ ORDER BY
 
 
 ---------------------
+
+
+
+SELECT 
+    a.antique_id AS 'ID',
+    a.description AS 'Name',
+    t.transaction_date AS 'Date',
+    t.amount_paid AS 'Price',
+    CONCAT(s.name, ' (Seller)') AS 'Seller',
+    CONCAT(b.name, ' (Buyer)') AS 'Buyer'
+FROM 
+    Transaction t
+JOIN 
+    Antique a ON t.antique_id = a.antique_id
+JOIN 
+    User s ON t.seller_id = s.user_id
+JOIN 
+    User b ON t.buyer_id = b.user_id
+WHERE 
+    t.transaction_date BETWEEN '2024-08-01' AND '2024-09-30'; 
+
+
+
+
+## Sales History
+
+| **ID** | **Name**             | **Date**               | **Price** | **Seller**                | **Buyer**                |
+|--------|----------------------|------------------------|-----------|---------------------------|--------------------------|
+| 2      | Old grandfather clock| 2024-08-01 18:01:26    | $1200.00  | Alice Johnson (Seller)   | Alice Johnson (Buyer)   |
+| 5      | Rare sculpture       | 2024-09-17 18:01:29    | $850.00   | Alice Johnson (Seller)   | Eve Davis (Buyer)       |
+| 7      | Vintage lamp         | 2024-09-20 18:01:32    | $180.00   | Bob Smith (Seller)       | Bob Smith (Buyer)       |
+| 8      | Antique vase         | 2024-09-17 18:01:35    | $350.00   | Carol Williams (Seller)  | Carol Williams (Buyer)  |
+
+----------
+
+
+
+SELECT 
+    c.category_name AS 'Category',
+    COUNT(a.antique_id) AS 'Number of Items'
+FROM 
+    Antique a
+JOIN 
+    Category c ON a.category_id = c.category_id
+WHERE 
+    a.status = 'for sale'
+GROUP BY 
+    c.category_name;
+
+
+
+
+## Inventory by Category
+
+| **Category** | **Number of Items** |
+|--------------|----------------------|
+| Jewelry      | 3                    |
+| Furniture    | 1                    |
+
+--------
