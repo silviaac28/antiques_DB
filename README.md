@@ -23,7 +23,7 @@ WHERE
 | 8      | Antique vase            | Jewelry       | $350.00   | Good          |
 
 
-
+----------
 
 SELECT 
     a.antique_id AS 'ID',
@@ -47,3 +47,33 @@ WHERE
 |--------|---------------------|--------------|-----------|---------------|
 | 5      | Rare sculpture      | Furniture     | $850.00   | Good          |
 
+---------
+
+SELECT 
+    t.transaction_id AS 'Transaction ID',
+    a.description AS 'Antique',
+    t.transaction_date AS 'Date',
+    t.amount_paid AS 'Price',
+    CONCAT(s.name, ' (Seller)') AS 'Seller',
+    CONCAT(b.name, ' (Buyer)') AS 'Buyer'
+FROM 
+    Transaction t
+JOIN 
+    Antique a ON t.antique_id = a.antique_id
+JOIN 
+    User s ON t.seller_id = s.user_id
+JOIN 
+    User b ON t.buyer_id = b.user_id
+WHERE 
+    t.seller_id = 2; 
+
+
+## Transaction History
+
+| **Transaction ID** | **Antique**              | **Date**               | **Price** | **Seller**                   | **Buyer**                   |
+|--------------------|--------------------------|------------------------|-----------|------------------------------|-----------------------------|
+| 9                  | Old grandfather clock    | 2024-09-17 18:01:26    | $1200.00  | Alice Johnson (Seller)      | Alice Johnson (Buyer)      |
+| 10                 | Rare sculpture           | 2024-09-17 18:01:29    | $850.00   | Alice Johnson (Seller)      | Eve Davis (Buyer)          |
+| 14                 | Vintage wooden chair     | 2024-09-17 18:02:31    | $150.00   | Alice Johnson (Seller)      | David Brown (Buyer)       |
+
+--------------------
